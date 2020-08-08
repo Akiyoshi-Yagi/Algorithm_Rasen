@@ -1,34 +1,28 @@
-from collections import deque
-from itertools import islice
+array = list(map(int, input().split()))
 
-array = list(map(int,input().split()))
-Q = deque(array)
-
-def merge_sort(a):
-
-    if len(a) == 1:
-        return a
+def merge_sort(arr):
+    if len(arr) == 1:
+        return arr
     else:
-        mid = len(a) // 2
-        return merge(merge_sort(deque(islice(a, 0, mid))), merge_sort(deque(islice(a, mid, len(a)))))
+        mid = len(arr) // 2
+        return merge(merge_sort(arr[:mid]), merge_sort(arr[mid:]))
 
-def merge(x, y):
-    z = deque([])
-    while len(x) > 0 and len(y) > 0:
-        X = x[0]
-        Y = y[0]
-        if X < Y:
-            z.append(x.popleft())
-        elif Y < X:
-            z.append(y.popleft())
-        elif X == Y:
-            z.append(x.popleft())
-            z.append(y.popleft())
+def merge(left, right):
+    merged = []
+    l_i, r_i = 0, 0
+    while l_i < len(left) and r_i < len(right):
+        if left[l_i] <= right[r_i]:
+            merged.append(left[l_i])
+            l_i += 1
+        else:
+            merged.append(right[r_i])
+            r_i += 1
+    if l_i <= len(left):
+        merged.extend(left[l_i:])
+    if r_i <= len(right):
+        merged.extend(right[r_i:])
 
-        if len(x) == 0 or len(y) == 0:
-            z = z + x + y
-    return z
+    return merged
 
-print(list(merge_sort(Q)))
-
+print(merge_sort(array))
 
