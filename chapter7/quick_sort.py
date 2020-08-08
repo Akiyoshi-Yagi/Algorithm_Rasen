@@ -20,8 +20,8 @@ def quick_sort(arr):
         else:
             same_crit += 1
 
-        left = quick_sort(left)
-        right = quick_sort(right)
+    left = quick_sort(left)
+    right = quick_sort(right)
 
     return left + [crit] * same_crit + right
 
